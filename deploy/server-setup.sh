@@ -11,6 +11,13 @@ if [ -z "$EMAIL" ]; then
     echo "Error: Email is required for Certbot."
     exit 1
 fi
+
+read -rp "Enter the Vultr server IP: " VULTR_IP
+if [ -z "$VULTR_IP" ]; then
+    echo "Error: Vultr IP is required."
+    exit 1
+fi
+
 APP_DIR="/var/www/scaleapi"
 
 echo "=== Setting up $DOMAIN ==="
@@ -75,6 +82,7 @@ nginx -t && systemctl reload nginx
 
 echo ""
 echo "=== Setup complete ==="
-echo "  Domain:  https://$DOMAIN"
-echo "  App dir: $APP_DIR"
-echo "  Next:    run deploy/deploy.sh to publish the app"
+echo "  Domain:    https://$DOMAIN"
+echo "  Server IP: $VULTR_IP"
+echo "  App dir:   $APP_DIR"
+echo "  Next:      from your dev machine run: ./deploy/deploy.sh admin@$VULTR_IP"
