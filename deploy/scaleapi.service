@@ -1,0 +1,16 @@
+[Unit]
+Description=ScaleApi .NET 8 Kestrel service
+After=network.target
+
+[Service]
+WorkingDirectory=/var/www/scaleapi
+ExecStart=/usr/bin/dotnet /var/www/scaleapi/ScaleApi.dll --urls "http://localhost:5000"
+Restart=always
+RestartSec=5
+SyslogIdentifier=scaleapi
+User=www-data
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target
