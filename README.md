@@ -86,13 +86,17 @@ Before running the setup script, add a **DNS A record** for `api233test.scaledat
 One command does everything — installs packages, clones the repo, gets SSL certs, builds, and starts the service:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/GTMichelli-Dev/Api233Test/main/deploy/server-setup.sh | bash -s -- <vultr-ip>
+apt update && apt install -y git
+git clone https://github.com/GTMichelli-Dev/Api233Test.git ~/Api233Test
+cd ~/Api233Test
+bash deploy/server-setup.sh <vultr-ip>
 ```
 
 Or if you already have the repo cloned:
 
 ```bash
 cd ~/Api233Test
+git pull
 bash deploy/server-setup.sh <vultr-ip>
 ```
 
