@@ -76,64 +76,32 @@ echo 'admin:Scale_Us3r' | chpasswd
 
 ## First-time Vultr deploy
 
-### 0. Prerequisites
+### Prerequisites
 
-Before running the setup script, make sure:
+Before running the setup script, add a **DNS A record** for `api233test.scaledata.net` pointing to your server's IP in your DNS provider.
 
-1. **DNS** — Add an A record for `api233test.scaledata.net` pointing to your server's IP (e.g. `207.148.13.214`) in your DNS provider.
-2. **Firewall** — Open ports 80 and 443:
-   ```bash
-   ufw allow 80
-   ufw allow 443
-   ufw reload
-   ```
+### Run the setup (on the server as root)
 
-Certbot needs both of these to issue SSL certificates.
-
-### 1. On the server
+One command does everything — installs packages, clones the repo, gets SSL certs, builds, and starts the service:
 
 ```bash
-apt update && apt install -y git
-git clone https://github.com/GTMichelli-Dev/Api233Test.git
-cd Api233Test
-cp deploy/scaleapi.service /tmp/
-bash deploy/server-setup.sh
+curl -fsSL https://raw.githubusercontent.com/GTMichelli-Dev/Api233Test/main/deploy/server-setup.sh | bash -s -- <vultr-ip>
+```
+
+Or if you already have the repo cloned:
+
+```bash
+cd ~/Api233Test
+bash deploy/server-setup.sh <vultr-ip>
 ```
 
 This installs:
-- .NET 8 runtime
-- Nginx
-- Certbot
+- Git, Nginx, Certbot, .NET 8 SDK
 - Two Let's Encrypt certs:
   - **ECDSA** (default, E8 chain) — for modern browsers
   - **RSA** (R12 chain) — for embedded PLC clients like your AWTX controller
-
-### 2. Build and start the app (on the server)
-
-```bash
-# Install .NET SDK
-curl -fsSL https://dot.net/v1/dotnet-install.sh -o /tmp/dotnet-install.sh
-bash /tmp/dotnet-install.sh --channel 8.0 --install-dir /usr/share/dotnet
-ln -sf /usr/share/dotnet/dotnet /usr/bin/dotnet
-
-# Build and publish
-cd ~/Api233Test
-dotnet publish -c Release -o /var/www/scaleapi
-```
-
-#### From your dev machine (Git Bash or WSL)
-
-```bash
-chmod +x deploy/deploy.sh
-./deploy/deploy.sh admin@<vultr-ip>
-```
-
-#### Start the service (on the server)
-
-```bash
-systemctl restart scaleapi
-systemctl status scaleapi
-```
+- Builds and publishes the app to `/var/www/scaleapi`
+- Starts the `scaleapi` systemd service
 
 ---
 
