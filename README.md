@@ -102,7 +102,24 @@ This installs:
   - **ECDSA** (default, E8 chain) — for modern browsers
   - **RSA** (R12 chain) — for embedded PLC clients like your AWTX controller
 
-### 2. From your dev machine (Git Bash or WSL)
+### 2. Build and start the app (on the server)
+
+```bash
+# Install .NET SDK
+curl -fsSL https://dot.net/v1/dotnet-install.sh -o /tmp/dotnet-install.sh
+bash /tmp/dotnet-install.sh --channel 8.0 --install-dir /usr/share/dotnet
+ln -sf /usr/share/dotnet/dotnet /usr/bin/dotnet
+
+# Build and publish
+cd ~/Api233Test
+dotnet publish -c Release -o /var/www/scaleapi
+
+# Start the service
+systemctl restart scaleapi
+systemctl status scaleapi
+```
+
+### 3. From your dev machine (Git Bash or WSL)
 
 ```bash
 chmod +x deploy/deploy.sh
