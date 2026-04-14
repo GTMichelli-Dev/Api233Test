@@ -1,11 +1,16 @@
 #!/bin/bash
 set -euo pipefail
 
-# Usage: bash deploy/server-setup.sh <domain> <email>
-# Example: bash deploy/server-setup.sh api233test.scaledata.net ssolleder@gmail.com
+# Usage: bash deploy/server-setup.sh [domain]
+# Example: bash deploy/server-setup.sh api233test.scaledata.net
 
-DOMAIN="${1:?Usage: $0 <domain> <email>}"
-EMAIL="${2:?Usage: $0 <domain> <email>}"
+DOMAIN="${1:-api233test.scaledata.net}"
+
+read -rp "Enter your email for Let's Encrypt certificates: " EMAIL
+if [ -z "$EMAIL" ]; then
+    echo "Error: Email is required for Certbot."
+    exit 1
+fi
 APP_DIR="/var/www/scaleapi"
 
 echo "=== Setting up $DOMAIN ==="

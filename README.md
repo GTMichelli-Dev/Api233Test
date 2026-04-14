@@ -97,7 +97,7 @@ apt update && apt install -y git
 git clone https://github.com/GTMichelli-Dev/Api233Test.git
 cd Api233Test
 cp deploy/scaleapi.service /tmp/
-bash deploy/server-setup.sh api233test.scaledata.net your@email.com
+bash deploy/server-setup.sh
 ```
 
 This installs:
