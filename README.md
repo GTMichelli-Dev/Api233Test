@@ -49,6 +49,16 @@ Negative = under target, positive = over target.
 
 ---
 
+## Server access
+
+| Item     | Value                          |
+|----------|--------------------------------|
+| User     | `admin`                        |
+| Password | `Scale User`                   |
+| SSH      | `ssh admin@george.scaledata.net` |
+
+---
+
 ## First-time Vultr deploy
 
 ### 1. On the server
