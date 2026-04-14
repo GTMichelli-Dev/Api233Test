@@ -73,6 +73,8 @@ echo 'admin:Scale User' | chpasswd
 ### 1. On the server
 
 ```bash
+git clone https://github.com/GTMichelli-Dev/Api233Test.git
+cd Api233Test
 scp deploy/scaleapi.service root@<vultr-ip>:/tmp/
 bash deploy/server-setup.sh api233test.scaledata.net your@email.com
 ```
