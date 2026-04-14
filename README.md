@@ -119,10 +119,6 @@ ln -sf /usr/share/dotnet/dotnet /usr/bin/dotnet
 # Build and publish
 cd ~/Api233Test
 dotnet publish -c Release -o /var/www/scaleapi
-
-# Start the service
-systemctl restart scaleapi
-systemctl status scaleapi
 ```
 
 #### From your dev machine (Git Bash or WSL)
@@ -130,6 +126,13 @@ systemctl status scaleapi
 ```bash
 chmod +x deploy/deploy.sh
 ./deploy/deploy.sh admin@<vultr-ip>
+```
+
+#### Start the service (on the server)
+
+```bash
+systemctl restart scaleapi
+systemctl status scaleapi
 ```
 
 ---
