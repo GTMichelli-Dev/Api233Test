@@ -5,7 +5,7 @@ set -euo pipefail
 # Example: bash server-setup.sh 207.148.13.214
 
 VULTR_IP="${1:?Usage: $0 <vultr-ip>}"
-DOMAIN="api233test.scaledata.net"
+DOMAIN="zm233apitest.scaledata.net"
 APP_DIR="/var/www/scaleapi"
 REPO="https://github.com/GTMichelli-Dev/Api233Test.git"
 

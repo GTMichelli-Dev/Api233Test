@@ -1,7 +1,7 @@
 # api233Test API
 
 Real-time weight and configuration API for TSS / msTechnologies scale systems.  
-Deployed at `https://api233test.scaledata.net`
+Deployed at `https://zm233apitest.scaledata.net`
 
 ---
 
@@ -36,7 +36,7 @@ ScaleApi/
 | POST   | `/api/api233Test/weight`       | Push a new weight reading            |
 | POST   | `/api/api233Test/config`       | Create / update scale configuration  |
 
-Swagger UI is at the root: `https://api233test.scaledata.net/`
+Swagger UI is at the root: `https://zm233apitest.scaledata.net/`
 
 ---
 
@@ -55,7 +55,7 @@ Negative = under target, positive = over target.
 |----------|--------------------------------|
 | User     | `admin`                        |
 | Password | *(set during setup — see below)* |
-| SSH      | `ssh admin@api233test.scaledata.net` |
+| SSH      | `ssh admin@zm233apitest.scaledata.net` |
 
 ### Create the admin user
 
@@ -79,7 +79,7 @@ echo "admin:$ADMIN_PASS" | chpasswd
 
 ### Prerequisites
 
-Before running the setup script, add a **DNS A record** for `api233test.scaledata.net` pointing to your server's IP in your DNS provider.
+Before running the setup script, add a **DNS A record** for `zm233apitest.scaledata.net` pointing to your server's IP in your DNS provider.
 
 ### Run the setup (on the server as root)
 
@@ -123,13 +123,13 @@ Builds, rsync's, restarts the service. ~15 seconds.
 ## Testing the RSA cert (embedded client simulation)
 
 ```bash
-curl "https://api233test.scaledata.net/api/api233Test/weight?locationId=1&scaleId=1"
+curl "https://zm233apitest.scaledata.net/api/api233Test/weight?locationId=1&scaleId=1"
 
-curl -X POST https://api233test.scaledata.net/api/api233Test/weight \
+curl -X POST https://zm233apitest.scaledata.net/api/api233Test/weight \
   -H "Content-Type: application/json" \
   -d '{"locationId":1,"scaleId":1,"weight":49750.00}'
 
-curl -X POST https://api233test.scaledata.net/api/api233Test/config \
+curl -X POST https://zm233apitest.scaledata.net/api/api233Test/config \
   -H "Content-Type: application/json" \
   -d '{"locationId":1,"scaleId":1,"target":50000,"underThreshold":500,"overThreshold":500,"submitThreshold":49800}'
 ```
@@ -143,7 +143,7 @@ curl -X POST https://api233test.scaledata.net/api/api233Test/config \
 function GetWeight()
   local result = awtx.httpclient.GET(
     "/api/api233Test/weight?locationId=1&scaleId=1",
-    "api233test.scaledata.net",
+    "zm233apitest.scaledata.net",
     GetResponse, nil, nil, nil, 443, 1)
   DebugSend("Get return = " .. result .. "\r\n")
 end
@@ -154,7 +154,7 @@ function PostWeight(weight)
     '{"locationId":1,"scaleId":1,"weight":%.2f}', weight)
   local result = awtx.httpclient.POST(
     "/api/api233Test/weight",
-    "api233test.scaledata.net",
+    "zm233apitest.scaledata.net",
     body, "application/json",
     GetResponse, nil, nil, nil, 443, 1)
   DebugSend("Post return = " .. result .. "\r\n")
