@@ -59,7 +59,13 @@ Negative = under target, positive = over target.
 
 ### Create the admin user
 
-Run as root on the server:
+First, SSH in as root:
+
+```bash
+ssh root@<vultr-ip>
+```
+
+Then create the admin user:
 
 ```bash
 useradd -m -s /bin/bash -G sudo admin
