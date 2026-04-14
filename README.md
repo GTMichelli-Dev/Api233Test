@@ -74,7 +74,7 @@ echo 'admin:Scale User' | chpasswd
 
 ```bash
 apt update && apt install -y git
-git clone https://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@github.com/GTMichelli-Dev/Api233Test.git
+git clone https://github.com/GTMichelli-Dev/Api233Test.git
 cd Api233Test
 cp deploy/scaleapi.service /tmp/
 bash deploy/server-setup.sh api233test.scaledata.net your@email.com
