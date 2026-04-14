@@ -8,20 +8,19 @@ Deployed at `https://zm233apitest.scaledata.net`
 ## Project structure
 
 ```
-ScaleApi/
+Api233Test/
 ├── Controllers/
-│   └── ScaleController.cs     # All endpoints
+│   └── Api233TestController.cs  # All endpoints
 ├── DTOs/
-│   └── ScaleDtos.cs           # Request/response models
+│   └── ScaleDtos.cs             # Request/response models
 ├── Services/
-│   └── ScaleStore.cs          # In-memory store (swap for SQL later)
+│   └── ScaleStore.cs            # In-memory store (swap for SQL later)
 ├── deploy/
-│   ├── nginx-scaleapi.conf    # Nginx with dual ECDSA + RSA certs
-│   ├── scaleapi.service       # systemd unit
-│   ├── server-setup.sh        # One-time Vultr server provisioning
-│   └── deploy.sh              # Build + push from dev machine
+│   ├── nginx-scaleapi.conf      # Nginx with dual ECDSA + RSA certs
+│   ├── scaleapi.service         # systemd unit
+│   ├── server-setup.sh          # One-time server provisioning (single script)
+│   └── deploy.sh                # Build + push from dev machine
 ├── Program.cs
-├── appsettings.json
 └── ScaleApi.csproj
 ```
 
