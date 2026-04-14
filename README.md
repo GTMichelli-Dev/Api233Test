@@ -54,7 +54,7 @@ Negative = under target, positive = over target.
 | Item     | Value                          |
 |----------|--------------------------------|
 | User     | `admin`                        |
-| Password | `Scale_Us3r`                   |
+| Password | *(set during setup — see below)* |
 | SSH      | `ssh admin@api233test.scaledata.net` |
 
 ### Create the admin user
@@ -69,7 +69,8 @@ Then create the admin user:
 
 ```bash
 useradd -m -s /bin/bash -G sudo admin
-echo 'admin:Scale_Us3r' | chpasswd
+read -rsp "Enter password for admin: " ADMIN_PASS && echo
+echo "admin:$ADMIN_PASS" | chpasswd
 ```
 
 ---
