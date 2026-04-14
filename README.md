@@ -70,6 +70,20 @@ echo 'admin:Scale User' | chpasswd
 
 ## First-time Vultr deploy
 
+### 0. Prerequisites
+
+Before running the setup script, make sure:
+
+1. **DNS** — Add an A record for `api233test.scaledata.net` pointing to your server's IP (e.g. `207.148.13.214`) in your DNS provider.
+2. **Firewall** — Open ports 80 and 443:
+   ```bash
+   ufw allow 80
+   ufw allow 443
+   ufw reload
+   ```
+
+Certbot needs both of these to issue SSL certificates.
+
 ### 1. On the server
 
 ```bash
