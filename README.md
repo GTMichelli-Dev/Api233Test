@@ -125,7 +125,7 @@ systemctl restart scaleapi
 systemctl status scaleapi
 ```
 
-### 3. From your dev machine (Git Bash or WSL)
+#### From your dev machine (Git Bash or WSL)
 
 ```bash
 chmod +x deploy/deploy.sh
