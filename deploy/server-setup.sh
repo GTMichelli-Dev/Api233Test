@@ -1,13 +1,30 @@
 #!/bin/bash
 set -euo pipefail
 
-# Usage: bash server-setup.sh <vultr-ip>
-# Example: bash server-setup.sh 207.148.13.214
+# Usage: sudo bash server-setup.sh <vultr-ip>
+# Example: sudo bash server-setup.sh 207.148.13.214
+
+if [ "$(id -u)" -ne 0 ]; then
+    echo "This script must be run as root. Re-running with sudo..."
+    exec sudo -E bash "$0" "$@"
+fi
 
 VULTR_IP="${1:?Usage: $0 <vultr-ip>}"
 DOMAIN="zm233apitest.scaledata.net"
 APP_DIR="/var/www/scaleapi"
 REPO="https://github.com/GTMichelli-Dev/Api233Test.git"
+
+# Resolve the invoking user's home (falls back to root's home when run directly as root).
+INVOKING_USER="${SUDO_USER:-$USER}"
+INVOKING_HOME="$(getent passwd "$INVOKING_USER" | cut -d: -f6)"
+INVOKING_HOME="${INVOKING_HOME:-$HOME}"
+REPO_DIR="$INVOKING_HOME/Api233Test"
+
+# If this script is being run from inside an existing checkout, use that instead.
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ -f "$SCRIPT_DIR/../ScaleApi.csproj" ]; then
+    REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+fi
 
 read -rp "Enter your email for Let's Encrypt certificates: " EMAIL
 if [ -z "$EMAIL" ]; then
@@ -22,10 +39,10 @@ apt update
 apt install -y git nginx certbot python3-certbot-nginx curl
 
 # ─── Clone the repo ──────────────────────────────────────────────────────────
-if [ ! -d ~/Api233Test ]; then
-    git clone "$REPO" ~/Api233Test
+if [ ! -d "$REPO_DIR" ]; then
+    git clone "$REPO" "$REPO_DIR"
 fi
-cd ~/Api233Test
+cd "$REPO_DIR"
 
 # ─── Install .NET 8 SDK ─────────────────────────────────────────────────────
 if ! command -v dotnet &>/dev/null; then
