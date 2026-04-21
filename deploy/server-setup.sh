@@ -70,12 +70,16 @@ echo "y" | ufw enable || true
 ufw reload
 
 # ─── Let's Encrypt certificates ──────────────────────────────────────────────
-# ECDSA cert (modern browsers)
+# ECDSA cert (modern browsers + mbedTLS embedded clients)
+# Force P-256 (secp256r1) — a NIST curve supported by mbedTLS.
+# Certbot's default curve varies by version and can land on one that
+# mbedTLS rejects with "Elliptic curve is unsupported".
 certbot certonly --nginx \
     --non-interactive --agree-tos --email "$EMAIL" \
     -d "$DOMAIN" \
     --cert-name "${DOMAIN}-ecdsa" \
-    --key-type ecdsa
+    --key-type ecdsa \
+    --elliptic-curve secp256r1
 
 # RSA cert (embedded PLC clients)
 certbot certonly --nginx \
