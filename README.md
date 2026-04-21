@@ -102,10 +102,30 @@ bash deploy/server-setup.sh <vultr-ip>
 This installs:
 - Git, Nginx, Certbot, .NET 8 SDK
 - Two Let's Encrypt certs:
-  - **ECDSA** (default, E8 chain) — for modern browsers
+  - **ECDSA** on P-256 / secp256r1 (E8 chain) — for modern browsers and mbedTLS clients
   - **RSA** (R12 chain) — for embedded PLC clients like your AWTX controller
 - Builds and publishes the app to `/var/www/scaleapi`
 - Starts the `scaleapi` systemd service
+
+---
+
+## Re-issuing the ECDSA cert on P-256
+
+If the server already has an ECDSA cert on a different curve (e.g. P-384),
+mbedTLS clients will fail with `Elliptic curve is unsupported (only NIST
+curves are supported)`. Re-issue the cert on P-256 with `--force-renewal`:
+
+```bash
+certbot certonly --nginx \
+    --non-interactive --agree-tos --email <your-email> \
+    -d zm233apitest.scaledata.net \
+    --cert-name zm233apitest.scaledata.net-ecdsa \
+    --key-type ecdsa \
+    --elliptic-curve secp256r1 \
+    --force-renewal
+
+systemctl reload nginx
+```
 
 ---
 
